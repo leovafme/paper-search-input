@@ -1,0 +1,261 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../iron-icons/av-icons.html">
+
+<link rel="stylesheet" href="animate.css" media="screen"  charset="utf-8">
+
+<script src="js/annyang.min.js"></script>
+
+<dom-module id="paper-search-input">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      #paper_search_input_InputText{
+        position: relative;
+        height: 30px;
+        border: 0px;
+        width: calc(100% - 90px);
+
+      }
+      #paper_search_input_InputText:focus{
+          outline: none;
+          border-color: inherit;
+          -webkit-box-shadow: none;
+          box-shadow: none;
+      }
+
+      #paper_search_input_Content{
+        width: 100%;
+        background-color: #fff;
+        border-radius: 5px;
+        height: 40px;
+        font-size: 13px;
+        color: #333;
+        opacity: 0.5;
+        transition-duration: 0.3s;
+        transition-timing-function: linear;
+      }
+      #paper_search_input_Content:hover{
+        opacity: 1;
+      }
+
+      paper-icon-button.hear_Voice{
+        --paper-icon-button: {
+          background-color:#789;
+        }
+        --paper-icon-button-hover: {
+          background-color: #839;
+        }
+      }
+
+      #paper_search_input_ContentMic{
+        height: 100%;
+        width: 100%;
+        background-color: white;
+        position: absolute;
+        left: 0px;
+        border-radius: 5px;
+        top: 0px;
+      }
+      .nfInputdscA{
+        display: none;
+
+      }
+      .nfInputdsc{
+        display: inline-block;
+      }
+      #paper_search_input_ContentMic_Text{
+        position: absolute;
+        top: 14px;
+        left: 35px;
+      }
+      #paper_search_input_ContentMic_Mic{
+        display: inline-block;
+        height: 20px;
+        width: 20px;
+        background-color: #FF1E1E;
+        color: #333;
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        border-radius: 20px;
+        animation-duration: 3s;
+        animation-delay: 2s;
+        animation-iteration-count: infinite;
+        -webkit-animation-duration: 3s;
+        -webkit-animation-delay: 2s;
+        -webkit-animation-iteration-count: infinite;
+        -moz-animation-duration: 3s;
+        -moz-animation-delay: 2s;
+        -moz-animation-iteration-count: infinite;
+      }
+
+      #paper_search_input_ContentMic_Mic{
+        animation: animationMic linear 2s;
+        animation-iteration-count: infinite;
+        transform-origin: 50% 50%;
+        -webkit-animation: animationMic linear 2s;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-transform-origin: 50% 50%;
+        -moz-animation: animationMic linear 2s;
+        -moz-animation-iteration-count: infinite;
+        -moz-transform-origin: 50% 50%;
+        -o-animation: animationMic linear 2s;
+        -o-animation-iteration-count: infinite;
+        -o-transform-origin: 50% 50%;
+        -ms-animation: animationMic linear 2s;
+        -ms-animation-iteration-count: infinite;
+        -ms-transform-origin: 50% 50%;
+      }
+
+      @keyframes animationMic{
+        0% {
+          transform:  scaleX(1.00) scaleY(1.00) ;
+        }
+        50% {
+          transform:  scaleX(0.80) scaleY(0.80) ;
+        }
+        100% {
+          transform:  scaleX(1.00) scaleY(1.00) ;
+        }
+      }
+
+      @-moz-keyframes animationMic{
+        0% {
+          -moz-transform:  scaleX(1.00) scaleY(1.00) ;
+        }
+        50% {
+          -moz-transform:  scaleX(0.80) scaleY(0.80) ;
+        }
+        100% {
+          -moz-transform:  scaleX(1.00) scaleY(1.00) ;
+        }
+      }
+
+      @-webkit-keyframes animationMic {
+        0% {
+          -webkit-transform:  scaleX(1.00) scaleY(1.00) ;
+        }
+        50% {
+          -webkit-transform:  scaleX(0.80) scaleY(0.80) ;
+        }
+        100% {
+          -webkit-transform:  scaleX(1.00) scaleY(1.00) ;
+        }
+      }
+
+      @-o-keyframes animationMic {
+        0% {
+          -o-transform:  scaleX(1.00) scaleY(1.00) ;
+        }
+        50% {
+          -o-transform:  scaleX(0.80) scaleY(0.80) ;
+        }
+        100% {
+          -o-transform:  scaleX(1.00) scaleY(1.00) ;
+        }
+      }
+
+      @-ms-keyframes animationMic {
+        0% {
+          -ms-transform:  scaleX(1.00) scaleY(1.00) ;
+        }
+        50% {
+          -ms-transform:  scaleX(0.80) scaleY(0.80) ;
+        }
+        100% {
+          -ms-transform:  scaleX(1.00) scaleY(1.00) ;
+        }
+      }
+
+      #paper_search_input_hearVoiceStop{
+        position: absolute;
+        right: 0px;
+
+      }
+    </style>
+
+
+
+    <div id="paper_search_input_Content" class="animated bounceInDown">
+      <paper-icon-button icon="search"></paper-icon-button>
+      <input type="text" name="name" on-focus="active_Input" on-focusout="disable_Input" id="paper_search_input_InputText" placeholder="{{placeholder}}" value="{{value::input}}">
+      <paper-icon-button icon="av:mic" id="paper_search_input_hearVoice" on-click="hearVoice"></paper-icon-button>
+
+      <div id="paper_search_input_ContentMic" class$="{{classAnimateMic}}" >
+        <div id="paper_search_input_ContentMic_Mic"></div>
+        <div id="paper_search_input_ContentMic_Text">{{textHear}}</div>
+        <paper-icon-button icon="av:mic-off" id="paper_search_input_hearVoiceStop" on-click="hearVoiceStop"></paper-icon-button>
+
+      </div>
+    </div>
+
+  </template>
+
+
+
+  <script>
+    Polymer({
+      is: 'paper-search-input',
+      properties: {
+        placeholder: {
+          type: String,
+          value:'Que buscar?'
+        },
+        value:{
+          type:String,
+          value:''
+        },
+        textHear:{
+          type:String,
+          value:'Escuchando...'
+        },
+        commandsVoice:{
+          type: Object,
+          notify: true,
+          value:{}
+        },
+        languaje:{
+          type:String,
+          value:'es-CO'
+        }
+      },
+      ready: function() {
+        this.classAnimateMic = 'nfInputdscA';
+
+        if (annyang) {
+          // Start listening.
+          annyang.setLanguage(this.languaje);
+        }
+      },
+      active_Input:function() {
+        this.$.paper_search_input_Content.style.opacity = 1;
+      },
+      disable_Input:function() {
+        this.$.paper_search_input_Content.style.opacity = 0.7;
+      },
+      hearVoice:function() {
+        if(annyang){
+          annyang.start();
+          this.classAnimateMic = 'animated bounceInLeft nfInputdsc';
+          this.active_Input();
+        }
+      },
+      hearVoiceStop:function() {
+        if(annyang){
+          annyang.abort();
+          this.classAnimateMic = 'nfInputdscA';
+          this.disable_Input();
+        }
+      },
+      _commandsVoice:function(Obj) {
+        if(annyang){
+          annyang.addCommands(Obj);
+        }
+      }
+    });
+  </script>
+</dom-module>

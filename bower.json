@@ -1,0 +1,17 @@
+{
+  "name": "paper-search-input",
+  "description": "Material desing input search",
+  "main": "",
+  "moduleType": [],
+  "keywords": [
+    "web-components",
+    "polymer",
+    "search",
+    "input"
+  ],
+  "authors": [
+    "Leovafme"
+  ],
+  "license": "MIT",
+  "homepage": ""
+}
