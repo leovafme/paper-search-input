@@ -16,7 +16,7 @@ html
 <paper-search-input id="paper-search-input" languaje="es-CO"></paper-search-input>
 ```
 
-### Config commans
+### Config commands
 ```sh
 var paperInputSearch = document.getElementById('paper-search-input');
       paperInputSearch._commandsVoice(
