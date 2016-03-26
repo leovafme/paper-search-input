@@ -39,6 +39,41 @@ var paperInputSearch = document.getElementById('paper-search-input');
         }
       );
 ```
+
+![alt tag](http://imgur.com/5y3Kgih)
+
+
+![alt tag](http://imgur.com/uqgxdHN)
+
+
+Use search history option
+
+```sh
+<paper-search-input id="paper-search-input" languaje="es-CO" search-history></paper-search-input>
+```
+
+add items searchHistory
+```sh
+var paperInputSearch = document.getElementById('paper-search-input');
+
+paperInputSearch.searchItems = [
+  {
+    "title":'Historial',
+    "subtitle":'',
+    "value":'',
+    "icon":'history'
+  },
+  {
+    "title":'Clientes enero',
+    "subtitle":'ene, 19 2016',
+    "value":'2015-01-19',
+    "icon":'chevron-right'
+  }
+];
+```
+![alt tag](http://imgur.com/ROfSqaN)
+
+
 License
 ----
 
@@ -70,4 +105,3 @@ MIT
    [PlGh]:  <https://github.com/joemccann/dillinger/tree/master/plugins/github/README.md>
    [PlGd]: <https://github.com/joemccann/dillinger/tree/master/plugins/googledrive/README.md>
    [PlOd]: <https://github.com/joemccann/dillinger/tree/master/plugins/onedrive/README.md>
-

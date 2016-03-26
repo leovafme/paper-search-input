@@ -3,6 +3,13 @@
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../iron-icons/av-icons.html">
 
+<link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../paper-item/paper-item-body.html">
+<link rel="import" href="../paper-item/paper-icon-item.html">
+
+<link rel="import" href="../paper-button/paper-button.html">
+
+
 <link rel="stylesheet" href="animate.css" media="screen"  charset="utf-8">
 
 <script src="js/annyang.min.js"></script>
@@ -176,6 +183,30 @@
         right: 0px;
 
       }
+      #paper_search_input_ContentResults{
+        position: absolute;
+        width: 100%;
+        margin-top: -4px;
+        background-color: #fff;
+        box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
+        z-index: 1;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+
+      #paper_search_input_ContentResults {
+        animation-duration: 0.3s;
+        animation-delay: 0.0s;
+        -webkit-animation-duration: 0.3s;
+        -webkit-animation-delay: 0.0s;
+        -moz-animation-duration: 0.3s;
+        -moz-animation-delay: 0.0s;
+        -o-animation-duration: 0.3s;
+        -o-animation-delay: 0.0s;
+        -ms-animation-duration: 0.3s;
+        -ms-animation-delay: 0.0s;
+        /*-webkit-animation-iteration-count: infinite;*/
+      }
     </style>
 
 
@@ -189,9 +220,39 @@
         <div id="paper_search_input_ContentMic_Mic"></div>
         <div id="paper_search_input_ContentMic_Text">{{textHear}}</div>
         <paper-icon-button icon="av:mic-off" id="paper_search_input_hearVoiceStop" on-click="hearVoiceStop"></paper-icon-button>
-
       </div>
+
+      <template is="dom-if" if="{{paperItems}}">
+        <template is="dom-if" if="{{searchHistory}}">
+          <div id="paper_search_input_ContentResults" role="listbox" class="animated fadeInDown">
+
+            <paper-menu attr-for-selected="value" selected="{{value}}">
+
+              <template is="dom-repeat" items="{{searchItems}}">
+                <paper-item value="{{item.value}}">
+                <paper-icon-item>
+                  <paper-icon-button icon="{{item.icon}}" item-icon></paper-icon-button>
+                  <paper-item-body>
+                    <div>{{item.title}}</div>
+                    <div secondary>{{item.subtitle}}</div>
+                  </paper-item-body>
+                </paper-icon-item>
+                </paper-item>
+              </template>
+
+            </paper-menu>
+
+            <hr style="border-color: rgba(255, 255, 255, 0.17);">
+            <content select="paper-button"></content>
+            <hr style="border: 0px;">
+
+          </div>
+        </template>
+      </template>
+
     </div>
+
+
 
   </template>
 
@@ -221,6 +282,18 @@
         languaje:{
           type:String,
           value:'es-CO'
+        },
+        searchHistory:{
+          type:Boolean,
+          value: false
+        },
+        paperItems:{
+          type:Boolean,
+          value:false
+        },
+        searchItems:{
+          type:Object,
+          value:[]
         }
       },
       ready: function() {
@@ -233,9 +306,14 @@
       },
       active_Input:function() {
         this.$.paper_search_input_Content.style.opacity = 1;
+        this.paperItems = true;
       },
       disable_Input:function() {
-        this.$.paper_search_input_Content.style.opacity = 0.7;
+        this.async(function() {
+          this.$.paper_search_input_Content.removeAttribute('style');
+          this.paperItems = false;
+        },200);
+
       },
       hearVoice:function() {
         if(annyang){
