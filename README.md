@@ -40,10 +40,10 @@ var paperInputSearch = document.getElementById('paper-search-input');
       );
 ```
 
-![alt tag](http://imgur.com/5y3Kgih)
+![alt tag](http://i.imgur.com/5y3Kgih.png)
 
 
-![alt tag](http://imgur.com/uqgxdHN)
+![alt tag](http://i.imgur.com/uqgxdHN.png)
 
 
 Use search history option
@@ -71,7 +71,7 @@ paperInputSearch.searchItems = [
   }
 ];
 ```
-![alt tag](http://imgur.com/ROfSqaN)
+![alt tag](http://i.imgur.com/ROfSqaN.png)
 
 
 License
